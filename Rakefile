@@ -1,3 +1,10 @@
+desc "Removes outdated compiled files"
+task :clean do
+  unless Dir['output/*'].empty?
+    `bundle exec nanoc prune --yes`
+  end
+end
+
 desc "Compile the site"
 task :compile => [:clean] do
   puts "Compiling site"
@@ -35,6 +42,3 @@ task :publish => [:compile] do
   end
 end
 
-task :clean do
-  `bundle exec nanoc prune --yes`
-end
