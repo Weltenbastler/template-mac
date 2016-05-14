@@ -42,3 +42,4 @@ task :publish => [:compile] do
   end
 end
 
+task :default => :compile
