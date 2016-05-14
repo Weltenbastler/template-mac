@@ -13,6 +13,10 @@ body {
   background: #fff;
 }
 
+img {
+  max-width: 80%;
+}
+
 a {
   text-decoration: none;
 }
