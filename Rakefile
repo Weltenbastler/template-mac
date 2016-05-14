@@ -18,10 +18,18 @@ task :compile => [:clean] do
   end
 end
 
+desc "Push compiled site to gh-pages"
 task :publish => [:compile] do
   # Environment variables used for Travis-CI
   ENV['GIT_DIR'] = File.expand_path(`git rev-parse --git-dir`.chomp)
-  old_sha = `git rev-parse refs/remotes/origin/gh-pages`.chomp
+
+  # Check if remote branch exists or not
+  if `git branch -r | grep gh-pages`.chomp.empty?
+    old_sha = ""
+  else
+    old_sha = `git rev-parse refs/remotes/origin/gh-pages --`.chomp
+  end
+
   Dir.chdir('output') do
     ENV['GIT_INDEX_FILE'] = gif = '/tmp/dev.gh.i'
     ENV['GIT_WORK_TREE'] = Dir.pwd
