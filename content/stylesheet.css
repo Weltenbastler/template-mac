@@ -22,8 +22,8 @@ a {
 }
 
 .missing {
-  font-style: italic;
-  color: #3c4778 !important;
+  color: black !important;
+  border-bottom-style: dashed !important;
 }
 
 a:link,
