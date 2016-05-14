@@ -37,16 +37,17 @@ task :publish => [:compile] do
     `git add -A`
     tsha = `git write-tree`.strip
     puts "Created tree   #{tsha}"
+    time = DateTime.now.to_s
     if old_sha.size == 40
-      csha = `echo 'boom' | git commit-tree #{tsha} -p #{old_sha}`.strip
+      csha = `echo 'update #{time}' | git commit-tree #{tsha} -p #{old_sha}`.strip
     else
-      csha = `echo 'boom' | git commit-tree #{tsha}`.strip
+      csha = `echo 'update #{time}' | git commit-tree #{tsha}`.strip
     end
     puts "Created commit #{csha}"
     puts `git show #{csha} --stat`
     puts "Updating gh-pages from #{old_sha}"
     `git update-ref refs/heads/gh-pages #{csha}`
-    `git push origin gh-pages`
+    `git push --force origin gh-pages`
   end
 end
 
