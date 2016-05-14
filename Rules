@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 preprocess do 
-  @items.create("", {},"/.nojekyll")
+  @items.create("", {:kind => "asset"}, "/.nojekyll")
 end
 
 compile '/**/*.html' do
