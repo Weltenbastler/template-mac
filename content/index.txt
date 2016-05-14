@@ -1,0 +1,6 @@
+## Index
+
+This is the index of your wiki's website. You can insert links to anything you like and use Markdown.
+
+* [[StartHere]]
+* OrUseCamelCaseWords

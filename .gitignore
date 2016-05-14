@@ -1,0 +1,8 @@
+.DS_Store
+
+# nanoc/project directories to ignore
+*.log
+.sass-cache
+.rvmrc
+output
+tmp
