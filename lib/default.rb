@@ -5,32 +5,24 @@ module Nanoc::Filters
     include ::Nanoc::Helpers::HTMLEscape
 
     def run(content, params = {})
-      content = content.gsub(/(?<!\[\[)(([A-Z][a-z0-9]+){2,})(?!\]\])/) do |match|
-        inner = $1.strip
-        linking inner
-      end
-
-      content.gsub(/\[\[(.*?[^:])\]\]/) do |match|
-        inner = $1.strip
-        linking inner
+      content.gsub(/\[\[([^\]|]*)(\|([^\]]*))?\]\]/) do |match|
+        # [[Link]]   or [[Title    |Link]]
+        #   ^^^^=$1  or   ^^^^^=$1  ^^^^=$3
+        link = $3 ? $3 : $1
+        title = $3 ? $1 : $3
+        linking link, title
       end
     end
     
-    def linking(inner)
-      title, link = inner.split('|', 2)
-      if link.nil?
-        link = title
-        title = nil
-      end
-
-      puts "searching for #{link} in #{item.path} ..."
+    def linking(link, title = nil)
+      # puts "searching for #{link} in #{item.path} ..."
       target = find_item(link)
       if target
         title = html_escape((title || target[:title] || link).strip)
         %Q[<a href="#{target.path}">#{title}</a>]
       else
         title = html_escape((title || link).strip)
-        %Q[#{link_to(title, link, :class => 'missing')}]
+        %Q[#{link_to(title, "/"+link, :class => 'missing')}]
       end
     end
 
