@@ -1,4 +1,4 @@
-<% wikis = Cached.wikis ||= @items.select { |i| i[:kind] != 'asset' } %>
+<% wikis = Cached.wikis ||= @items.select { |i| i[:kind] != 'asset' && !i.binary? } %>
 <% wikis.each do |item| %>
   <%= link_to(item.identifier.link_title, item) %> <br /> 
 <% end %>
